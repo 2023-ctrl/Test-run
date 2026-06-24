@@ -24,6 +24,19 @@
             margin: 20px 0 40px 0;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
+        .gif-container {
+            margin: 20px 0;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .gif-container img {
+            max-width: 300px;
+            max-height: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
         .button-container {
             position: relative;
             height: 400px;
@@ -69,6 +82,18 @@
             position: fixed;
             pointer-events: none;
         }
+        .celebration-gif {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            max-width: 400px;
+            max-height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
     </style>
 </head>
 <body>
@@ -76,10 +101,16 @@
     <h1>Tricia Kaye, would you go out on a date with me?</h1>
     <p class="poem">"Tricia Kaye, you make my heart sway, will you go out on a date with me today?"</p>
     
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/KNDIqOvLjV4d2/giphy.gif" alt="Cute love animation">
+    </div>
+    
     <div class="button-container">
         <button id="yesBtn" onclick="celebrate()">Yes! 💚</button>
         <button id="noBtn" onmouseover="moveButton()" onmouseout="wiggle()">No</button>
     </div>
+
+    <img class="celebration-gif" id="celebrationGif" src="https://media.giphy.com/media/g9GWusSQStVKg/giphy.gif" alt="Celebration">
 
     <script>
         function moveButton() {
@@ -106,6 +137,15 @@
             alert('Yay! See you then! 🎉 You\'ve made me the happiest!');
             createConfetti();
             changeEmoji();
+            showCelebrationGif();
+        }
+
+        function showCelebrationGif() {
+            var gif = document.getElementById('celebrationGif');
+            gif.style.display = 'block';
+            setTimeout(() => {
+                gif.style.display = 'none';
+            }, 4000);
         }
 
         function createConfetti() {
