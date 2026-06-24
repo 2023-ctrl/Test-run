@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Question for Tricia Kaye</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
             margin: 0;
@@ -18,10 +19,12 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            padding-bottom: env(safe-area-inset-bottom, 20px);
         }
         .container {
             width: 100%;
-            height: 100vh;
+            /* use min-height so content can grow on small screens without clipping */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -42,15 +45,17 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
         .photo-container {
-            margin: 40px 0;
-            height: 350px;
+            margin: 24px 0;
+            /* let image size itself responsively */
+            height: auto;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .photo-container img {
-            max-width: 500px;
-            max-height: 350px;
+            max-width: 92%;
+            width: 300px;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             background-color: rgba(255,255,255,0.1);
@@ -61,9 +66,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            margin: 40px auto;
+            gap: 18px;
+            margin: 20px auto;
             position: relative;
+            width: 100%;
+            padding: 0 16px 20px 16px; /* ensure spacing and safe area on mobile */
+            box-sizing: border-box;
         }
         button { 
             cursor: pointer;
@@ -74,26 +82,30 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         #yesBtn { 
-            padding: 20px 40px; 
-            font-size: 36px;
+            padding: 16px 28px; 
+            font-size: 32px;
             background-color: #4CAF50;
             color: white;
             position: relative;
             z-index: 10;
+            width: 320px;
+            max-width: 92%;
         }
         #yesBtn:hover {
             background-color: #45a049;
-            transform: scale(1.05);
+            transform: scale(1.03);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
         #noBtn { 
             /* make No a normal positioned button below Yes */
             position: relative;
-            padding: 12px 28px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 20px;
             background-color: #f44336;
             color: white;
             z-index: 5;
+            width: 240px;
+            max-width: 92%;
         }
         #noBtn:hover {
             background-color: #da190b;
@@ -115,12 +127,14 @@
             }
         }
         /* Responsive adjustments */
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             h1 { font-size: 2em; }
-            .poem { font-size: 1.2em; }
+            .poem { font-size: 1.1em; margin: 16px 0 24px 0; }
             .photo-container img { width: 240px; }
-            #yesBtn { font-size: 28px; padding: 14px 28px; }
-            #noBtn { font-size: 16px; padding: 10px 24px; }
+            #yesBtn { font-size: 26px; padding: 12px 20px; }
+            #noBtn { font-size: 18px; padding: 10px 18px; }
+            .emoji { font-size: 4em; }
+            .button-container { gap: 12px; }
         }
     </style>
 </head>
@@ -131,7 +145,7 @@
         <p class="poem">"Let's make more memories together, will you go on another date with me?"</p>
         
         <div class="photo-container">
-            <img src="image_2.png" alt="Couple Selfie" style="width:300px; border-radius:15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 20px;">
+            <img src="image_2.png" alt="Couple Selfie" loading="lazy">
         </div>
         
         <div class="button-container">
@@ -144,7 +158,7 @@
         let emojiInterval = null;
 
         function noClicked() {
-            // simple friendly response when No is clicked
+            // friendly response when No is clicked
             alert("It's okay — thank you for being honest. 💛");
         }
 
@@ -188,6 +202,19 @@
                 emojiDiv.textContent = '💚';
             }, 3000);
         }
+
+        // Ensure buttons remain visible on load/resize (safety clamp)
+        function clampButtonsIntoView() {
+            const btns = [document.getElementById('yesBtn'), document.getElementById('noBtn')];
+            btns.forEach(btn => {
+                if (!btn) return;
+                // make sure width isn't larger than viewport
+                btn.style.maxWidth = '92%';
+            });
+        }
+
+        window.addEventListener('load', clampButtonsIntoView);
+        window.addEventListener('resize', clampButtonsIntoView);
     </script>
 </body>
 </html>
