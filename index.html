@@ -38,9 +38,13 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .button-container {
-            position: relative;
-            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
             margin: 40px auto;
+            flex-wrap: wrap;
+            position: relative;
         }
         button { 
             padding: 15px 30px; 
@@ -56,7 +60,6 @@
             background-color: #4CAF50;
             color: white;
             position: relative;
-            margin: 20px;
         }
         #yesBtn:hover {
             background-color: #45a049;
@@ -67,9 +70,6 @@
             position: absolute;
             background-color: #f44336;
             color: white;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
         }
         #noBtn:hover {
             background-color: #da190b;
