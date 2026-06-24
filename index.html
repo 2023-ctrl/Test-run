@@ -105,18 +105,13 @@
         .confetti {
             position: fixed;
             pointer-events: none;
+            will-change: transform, opacity;
         }
-        .celebration-gif {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            max-width: 600px;
-            max-height: 400px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -136,13 +131,16 @@
         </div>
     </div>
 
-    <img class="celebration-gif" id="celebrationGif" src="https://media3.giphy.com/media/g9GWusSQStVKg/giphy.gif?cid=ecf05e47&rid=giphy.gif&ct=g" alt="Celebration">
-
     <script>
+        let emojiInterval = null;
+
         function moveButton() {
             var btn = document.getElementById('noBtn');
-            var x = Math.random() * (window.innerWidth - 150);
-            var y = Math.random() * (window.innerHeight - 100);
+            // prevent placing the button off-screen
+            var btnWidth = btn.offsetWidth || 150;
+            var btnHeight = btn.offsetHeight || 40;
+            var x = Math.random() * Math.max(0, window.innerWidth - btnWidth);
+            var y = Math.random() * Math.max(0, window.innerHeight - btnHeight);
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
             changeNoButtonText();
@@ -158,15 +156,7 @@
             alert('Yay! See you then! 🎉 You\'ve made me the happiest!');
             createConfetti();
             changeEmoji();
-            showCelebrationGif();
-        }
-
-        function showCelebrationGif() {
-            var gif = document.getElementById('celebrationGif');
-            gif.style.display = 'block';
-            setTimeout(() => {
-                gif.style.display = 'none';
-            }, 4000);
+            // removed GIF display to avoid external media
         }
 
         function createConfetti() {
@@ -176,32 +166,32 @@
                 confetti.textContent = ['💕', '🌹', '✨', '💑', '🎉'][Math.floor(Math.random() * 5)];
                 confetti.style.left = Math.random() * 100 + '%';
                 confetti.style.top = '-10px';
-                confetti.style.fontSize = '2em';
+                confetti.style.fontSize = (16 + Math.random() * 24) + 'px';
+                confetti.style.transform = 'translateY(0)';
                 confetti.style.animation = `fall ${2 + Math.random() * 3}s linear forwards`;
                 document.body.appendChild(confetti);
-                
-                setTimeout(() => confetti.remove(), 5000);
+
+                setTimeout(() => confetti.remove(), 5500);
             }
         }
 
         function changeEmoji() {
             var emojis = ['💕', '💑', '🌹', '✨', '💏', '🎊'];
             var emojiDiv = document.getElementById('emoji');
-            setInterval(() => {
+            if (emojiInterval) clearInterval(emojiInterval);
+            // change emoji rapidly for a short burst, then stop
+            emojiInterval = setInterval(() => {
                 emojiDiv.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            }, 500);
-        }
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fall {
-                to {
-                    transform: translateY(100vh) rotate(360deg);
-                    opacity: 0;
+            }, 300);
+            setTimeout(() => {
+                if (emojiInterval) {
+                    clearInterval(emojiInterval);
+                    emojiInterval = null;
                 }
-            }
-        `;
-        document.head.appendChild(style);
+                // leave a final emoji
+                emojiDiv.textContent = '💚';
+            }, 3000);
+        }
     </script>
 </body>
 </html>
