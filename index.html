@@ -53,6 +53,7 @@
             max-height: 350px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background-color: rgba(255,255,255,0.1);
         }
         .button-container {
             display: flex;
@@ -64,8 +65,6 @@
             position: relative;
         }
         button { 
-            padding: 25px 50px; 
-            font-size: 28px; 
             cursor: pointer;
             border: none;
             border-radius: 12px;
@@ -74,22 +73,29 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         #yesBtn { 
+            padding: 40px 80px; 
+            font-size: 48px;
             background-color: #4CAF50;
             color: white;
             position: relative;
+            z-index: 10;
         }
         #yesBtn:hover {
             background-color: #45a049;
-            transform: scale(1.1);
-            font-size: 32px;
+            transform: scale(1.15);
+            font-size: 52px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
         #noBtn { 
             position: absolute;
+            padding: 15px 30px;
+            font-size: 18px;
             background-color: #f44336;
             color: white;
         }
         #noBtn:hover {
             background-color: #da190b;
+            transform: scale(0.9);
         }
         .emoji {
             font-size: 5em;
@@ -120,7 +126,7 @@
         <p class="poem">"Tricia Kaye, you make my heart sway, will you go out on a date with me today?"</p>
         
         <div class="gif-container">
-            <img src="https://media.giphy.com/media/KNDIqOvLjV4d2/giphy.gif" alt="Cute love animation">
+            <img src="https://media3.giphy.com/media/KNDIqOvLjV4d2/giphy.gif?cid=ecf05e47&rid=giphy.gif&ct=g" alt="Cute love animation" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22500%22 height=%22350%22%3E%3Crect fill=%22%23ddd%22 width=%22500%22 height=%22350%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 text-anchor=%22middle%22 dy=%22.3em%22%3E💕%3C/text%3E%3C/svg%3E'">
         </div>
         
         <div class="button-container">
@@ -129,7 +135,7 @@
         </div>
     </div>
 
-    <img class="celebration-gif" id="celebrationGif" src="https://media.giphy.com/media/g9GWusSQStVKg/giphy.gif" alt="Celebration">
+    <img class="celebration-gif" id="celebrationGif" src="https://media3.giphy.com/media/g9GWusSQStVKg/giphy.gif?cid=ecf05e47&rid=giphy.gif&ct=g" alt="Celebration" onerror="this.style.display='none'">
 
     <script>
         function moveButton() {
